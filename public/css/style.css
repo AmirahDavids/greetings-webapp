@@ -1,0 +1,28 @@
+.angled-gradient {
+    background: linear-gradient(0deg, #FF930F,#FFF95B);
+   background-repeat: no-repeat;
+   
+  }
+
+  html{
+      
+      text-align: center;
+  }
+
+  #inputElement{
+      text-align: center;
+      border: none;
+      height: 50px;
+      width: 200px;
+      border-radius: 1em;
+  }
+  .label-radio-container{
+    
+      padding: 10px;
+  }
+
+  .big-box
+  {
+      height: 650px;
+  }
+ 
