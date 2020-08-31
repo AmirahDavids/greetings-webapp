@@ -1,28 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Gayathri&display=swap');
+
 .angled-gradient {
-    background: linear-gradient(0deg, #FF930F,#FFF95B);
-   background-repeat: no-repeat;
-   
-  }
+    background: linear-gradient(0deg, #8789c0, #0ad3ff);
+    background-repeat: no-repeat;
+    height: 100%;
+}
 
-  html{
-      
-      text-align: center;
-  }
+html {
+    text-align: center;
+    font-family: 'Gayathri', sans-serif;
+}
 
-  #inputElement{
-      text-align: center;
-      border: none;
-      height: 50px;
-      width: 200px;
-      border-radius: 1em;
-  }
-  .label-radio-container{
+#inputElement {
+    text-align: center;
+    border: none;
+    height: 50px;
+    width: 200px;
+    border-radius: 1em;
+    background-color: aliceblue;
+}
+
+.label-radio-container {
+
+    padding: 10px;
+}
+
+.big-box {
+    height: 650px;
+}
+
+
+
+.user-name {
+    margin: 10px auto;
+    padding: 1em;
+    background-color: ghostwhite;
+    width: 150px;
+    border-radius: 1em;
+}
+
+.entry {
+    width: 60%;
+    margin: 0 auto;
     
-      padding: 10px;
-  }
+    color: rgb(57, 133, 57);
+}
 
-  .big-box
-  {
-      height: 650px;
-  }
- 
+.flash-box {
+    margin: 15px;
+}
+
+.sm-spacer {
+    margin-top: 15px;
+}
+
+
+.appBtn {
+    text-align: center;
+    border: none;
+    height: 30px;
+    width: 150px;
+    border-radius: 1em;
+    background-color: aliceblue;
+}
+
+.appBtn:hover {
+    background-color: #3e8e41;
+    color: white;
+}
+  
