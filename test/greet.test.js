@@ -32,12 +32,12 @@ describe("The getAllUsers function", function () {
         var greetFactoryOne = GreetFactory();
         greetFactoryOne.greetUser("Daiyaan","french");
         greetFactoryOne.greetUser("Mujahid","english");
-        assert.deepEqual({"Daiyaan":0,"Mujahid":0},greetFactoryOne.getAllUsers());
+        assert.deepEqual({"Daiyaan":1,"Mujahid":1},greetFactoryOne.getAllUsers());
     });
     it("should return the object of all users greeted", function () {
         var greetFactoryOne = GreetFactory();
         greetFactoryOne.greetUser("Mujahid","english");
-        assert.deepEqual({"Mujahid":0},greetFactoryOne.getAllUsers());
+        assert.deepEqual({"Mujahid":1},greetFactoryOne.getAllUsers());
     });
     it("should return the total number of users greeted", function () {
         var greetFactoryOne = GreetFactory();
