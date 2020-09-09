@@ -1,3 +1,14 @@
 language: node_js
 node_js:
   - 12
+env:
+  - DB=postgresql://postgres@localhost:5432/greet_db
+
+before_script: 
+  - psql -c 'create database greet_db;' -U postgres
+  - psql -U postgres -d greet_db -a -f database.sql
+
+addons:
+  apt:
+  packages:
+    - postgresql-server-dev-9.2
