@@ -1,6 +1,6 @@
 language: node_js
 env:
-  - DB=postgresql://postgres@localhost:5432/greet_db
+  - DB=postgresql://postgres@localhost:5432/greeter
 
 node_js:
   - 12
@@ -8,8 +8,8 @@ node_js:
 before_script: 
   # - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
   # - sudo service postgresql restart
-  - psql -c 'create database greet_db;' -U postgres
-  - psql -U postgres -d greet_db -a -f database.sql
+  - psql -c 'create database greeter;' -U postgres
+  - psql -U postgres -d greeter -a -f database.sql
 
 addons:
   apt:
