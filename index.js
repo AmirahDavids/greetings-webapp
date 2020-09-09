@@ -4,9 +4,18 @@ var bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
 
+const pg = require("pg");
+const Pool = pg.Pool;
+
+const connectionString = process.env.DATABASE_URL || 'postgresql://amirah:coder123@localhost:5432/greet_db';
+const pool = new Pool({
+    connectionString
+});
+
+
 
 const GreetFactory = require('./greet');
-const greet = GreetFactory();
+const greet = GreetFactory(pool);
 const app = express();
 
 app.engine('handlebars', exphbs({
@@ -30,15 +39,13 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.get("/", function (req, res) {
-
+app.get("/", async function (req, res) { 
     res.render("index", {
-        counter: greet.getGreetCount(),
+        counter: await greet.getGreetCountFromDatabase()
     })
-
 });
 
-app.post("/greetings", function (req, res) {
+app.post("/greetings", async function (req, res) {
 
     var input = req.body.first_name;
     var language = req.body.selector;
@@ -46,37 +53,37 @@ app.post("/greetings", function (req, res) {
     var message = greet.displayFlashMsg(input, language)
     var name = greet.getNameFromInput(input);
 
-    var objectForHandlebars = {
-        greeting: greet.greetUser(name, language),
-        counter: greet.getGreetCount()
+    var data = {
+        greeting: await greet.greetUser(name, language),
+        counter: await greet.getGreetCountFromDatabase()
     }
     if (message !== "") {
         req.flash('info', message);
     }
 
-    res.render("index", objectForHandlebars);
+    res.render("index", data);
 });
 
-app.get('/greeted', function (req, res) {
+app.get('/greeted', async function (req, res) {
     var data = {
-        user: greet.getAllUsersAsList()
+        user:await greet.getAllUsersAsListFromDatabase()
     }
-
     res.render('greeted', data);
 });
 
-app.post("/reset", function (req, res) {
-    greet.resetBtn();
+app.post("/reset", async function (req, res) {
+
+    await greet.resetBtn();
     res.redirect("/");
 });
 
-app.get('/counter/:name', function (req, res) {
+app.get('/counter/:name', async function (req, res) {
 
     var name = req.params.name;
 
     var data = {
         name: greet.getNameFromInput(name),
-        count: greet.getGreetCountForUser(name)
+        count: await greet.getGreetCountForUserFromDatabase(name)
     }
 
     res.render('counter', data)
