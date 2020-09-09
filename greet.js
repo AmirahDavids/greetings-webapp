@@ -1,39 +1,5 @@
 module.exports = function GreetFactory(pool) {
 
-
-    // var userMap = {}; // old
-
-    // function getAllUsers() {
-    //     return userMap;
-    // }
-
-    // addUser(name); // old
-    // function getAllUsersAsList() {
-    //     return Object.keys(userMap);
-    // }
-    // function addUser(userName) {
-    //     if (userMap[userName] === undefined) {
-    //         userMap[userName] = 0;
-    //     }
-    //     userMap[userName]++
-    // }
-    // function getGreetCount() {
-    //     return Object.keys(userMap).length;
-    // }
-    // function getGreetCountForUser(name) {
-    //     if (userMap[name] !== undefined) {
-    //         return userMap[name];
-    //     }
-    //     return 0;
-    // }
-    // function resetBtn() {
-    //     userMap = {};
-    // }
-    // addUser,
-    // getGreetCount,
-    // getAllUsers,
-    // getAllUsersAsList,
-    // getGreetCountForUser,
     async function greetUser(name, language) {
         if (!language || !name) {
             return "";
