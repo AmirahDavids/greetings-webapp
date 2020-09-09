@@ -1,12 +1,49 @@
-module.exports = function GreetFactory() {
+module.exports = function GreetFactory(pool) {
 
-    var userMap = { };
 
-    function greetUser(name, language) {
+    // var userMap = {}; // old
+
+    // function getAllUsers() {
+    //     return userMap;
+    // }
+
+    // addUser(name); // old
+    // function getAllUsersAsList() {
+    //     return Object.keys(userMap);
+    // }
+    // function addUser(userName) {
+    //     if (userMap[userName] === undefined) {
+    //         userMap[userName] = 0;
+    //     }
+    //     userMap[userName]++
+    // }
+    // function getGreetCount() {
+    //     return Object.keys(userMap).length;
+    // }
+    // function getGreetCountForUser(name) {
+    //     if (userMap[name] !== undefined) {
+    //         return userMap[name];
+    //     }
+    //     return 0;
+    // }
+    // function resetBtn() {
+    //     userMap = {};
+    // }
+    // addUser,
+    // getGreetCount,
+    // getAllUsers,
+    // getAllUsersAsList,
+    // getGreetCountForUser,
+    async function greetUser(name, language) {
         if (!language || !name) {
             return "";
         }
-        addUser(name);
+        if (await doesUserExist(name)) {
+            await updateUserCounter(name);
+        } else {
+            await addUserToDatabase(name);
+        }
+
         switch (language) {
             case "english":
                 return `Hello, ${name}`;
@@ -19,15 +56,27 @@ module.exports = function GreetFactory() {
         }
     }
 
-    function addUser(userName) {
-        if (userMap[userName] === undefined) {
-            userMap[userName] = 0;
-        }
-        userMap[userName]++
+    async function addUserToDatabase(userName) {
+        await pool.query(`insert into person (first_name, counter) values ('${userName}',1)`);
     }
 
-    function getGreetCount() {
-        return Object.keys(userMap).length;
+    async function doesUserExist(firstName) {
+        let result = await pool.query(`select * from person where first_name = '${firstName}'`);
+        if (result.rowCount == 0) {
+            return false;
+        } else {
+            return true
+        }
+    }
+
+    async function updateUserCounter(firstName) {
+        let updatedCounter = await getGreetCountForUserFromDatabase(firstName) + 1;
+        await pool.query(`update person set counter = ${updatedCounter} where first_name = '${firstName}'`);
+    }
+
+    async function getGreetCountFromDatabase() {
+        let result = await pool.query('select count(*) from person');
+        return result.rows[0]["count"];
     }
 
     function getNameFromInput(textBoxValue) {
@@ -40,23 +89,19 @@ module.exports = function GreetFactory() {
         return "";
     }
 
-    function getAllUsers() {
-        return userMap;
+    async function getAllUsersAsListFromDatabase() {
+        let result = await pool.query(`select first_name from person`);
+        return result.rows;
     }
 
-    function getAllUsersAsList() {
-        return Object.keys(userMap);
+    async function getGreetCountForUserFromDatabase(name) {
+
+        let result = await pool.query(`select counter from person where first_name = '${name}' `);
+        return result.rows[0].counter;
     }
 
-    function getGreetCountForUser(name) {
-        if (userMap[name] !== undefined) {
-            return userMap[name];
-        }
-        return 0;
-    }
-
-    function resetBtn() {
-        userMap = {};
+    async function resetBtn() {
+        await pool.query('delete from person');
     }
 
     function displayFlashMsg(name, language) {
@@ -73,13 +118,12 @@ module.exports = function GreetFactory() {
 
     return {
         greetUser,
-        addUser,
-        getGreetCount,
         getNameFromInput,
-        getAllUsers,
+        getGreetCountFromDatabase,
+        getGreetCountForUserFromDatabase,
+        getAllUsersAsListFromDatabase,
+        addUserToDatabase,
         resetBtn,
-        getAllUsersAsList,
-        getGreetCountForUser,
-        displayFlashMsg
+        displayFlashMsg,
     }
 }
