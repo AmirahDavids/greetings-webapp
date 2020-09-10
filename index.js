@@ -12,8 +12,6 @@ const pool = new Pool({
     connectionString
 });
 
-
-
 const GreetFactory = require('./greet');
 const greet = GreetFactory(pool);
 const app = express();
@@ -39,7 +37,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.get("/", async function (req, res) { 
+app.get("/", async function (req, res) {
     res.render("index", {
         counter: await greet.getGreetCountFromDatabase()
     })
@@ -66,7 +64,7 @@ app.post("/greetings", async function (req, res) {
 
 app.get('/greeted', async function (req, res) {
     var data = {
-        user:await greet.getAllUsersAsListFromDatabase()
+        user: await greet.getAllUsersAsListFromDatabase()
     }
     res.render('greeted', data);
 });
@@ -92,5 +90,5 @@ app.get('/counter/:name', async function (req, res) {
 
 let PORT = process.env.PORT || 3500;
 app.listen(PORT, function () {
-    console.log('App starting on port', PORT);
+    console.log('http://localhost:', PORT);
 });

@@ -5,7 +5,7 @@ describe("The getGreetCount function", function () {
 
     const pg = require("pg");
     const Pool = pg.Pool;
-    const connectionString = process.env.DATABASE_URL || 'postgresql://amirah:coder123@localhost:5432/greeter';
+    const connectionString = process.env.DATABASE_URL || 'postgresql://amirah:coder123@localhost:5432/greet_db_test';
     const pool = new Pool({
         connectionString
     });
@@ -25,7 +25,7 @@ describe("The getGreetCount function", function () {
         await pool.query(INSERT_QUERY, ["Mecayle", 1]);
 
         const results = await greetFactory.getGreetCountFromDatabase()
-        
+
         assert.equal(1, results);
 
     });
