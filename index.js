@@ -69,9 +69,9 @@ app.get('/greeted', async function (req, res) {
     res.render('greeted', data);
 });
 
-app.post("/reset", async function (req, res) {
+app.post("/clear", async function (req, res) {
 
-    await greet.resetBtn();
+    await greet.clearBtn();
     res.redirect("/");
 });
 
@@ -90,5 +90,5 @@ app.get('/counter/:name', async function (req, res) {
 
 let PORT = process.env.PORT || 3500;
 app.listen(PORT, function () {
-    console.log('http://localhost:', PORT);
+    console.log('http://localhost:'+PORT);
 });
