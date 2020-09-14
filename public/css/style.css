@@ -29,21 +29,20 @@ html {
     height: 650px;
 }
 
-
-
 .user-name {
-    margin: 10px auto;
-    padding: 1em;
+    float: left;
+    margin: 10px;
+    padding: 8px;
     background-color: ghostwhite;
-    width: 150px;
+    width: 100px;
     border-radius: 1em;
 }
 
 .entry {
     width: 60%;
     margin: 0 auto;
-    
-    color: rgb(57, 133, 57);
+
+    color: red;
 }
 
 .flash-box {
@@ -52,6 +51,7 @@ html {
 
 .sm-spacer {
     margin-top: 15px;
+
 }
 
 
@@ -68,4 +68,12 @@ html {
     background-color: #3e8e41;
     color: white;
 }
-  
+
+.buttons-box {
+    margin-top: 30px;
+}
+
+.clearfix {
+
+    overflow: auto;
+}
