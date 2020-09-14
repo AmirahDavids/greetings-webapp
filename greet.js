@@ -1,9 +1,11 @@
 module.exports = function GreetFactory(pool) {
 
     async function greetUser(name, language) {
+        
         if (!language || !name) {
             return "";
         }
+
         if (await doesUserExist(name)) {
             await updateUserCounter(name);
         } else {
@@ -66,7 +68,7 @@ module.exports = function GreetFactory(pool) {
         return result.rows[0].counter;
     }
 
-    async function resetBtn() {
+    async function clearBtn() {
         await pool.query('delete from person');
     }
 
@@ -89,7 +91,7 @@ module.exports = function GreetFactory(pool) {
         getGreetCountForUserFromDatabase,
         getAllUsersAsListFromDatabase,
         addUserToDatabase,
-        resetBtn,
+        clearBtn,
         displayFlashMsg,
     }
 }
